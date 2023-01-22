@@ -1,4 +1,4 @@
-# Project 1 - Building A Sudoku Browser Game
+# Building A Sudoku Browser Game
 
 ## **_Description_**
 
