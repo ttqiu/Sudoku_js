@@ -1,0 +1,30 @@
+body {
+  margin: 0px;
+  height: 97vh;
+  align-items: center;
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.game {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+section.board {
+  display: grid;
+  grid-template-columns: repeat(9, 7vmin);
+  grid-template-rows: repeat(9, 7vmin);
+  grid-gap: 0vmin;
+  justify-content: center;
+}
+
+.box {
+  font-size: 2vmin;
+  text-align: center;
+  vertical-align: middle;
+  cursor: auto;
+}
