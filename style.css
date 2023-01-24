@@ -16,15 +16,35 @@ body {
 
 section.board {
   display: grid;
-  grid-template-columns: repeat(9, 7vmin);
   grid-template-rows: repeat(9, 7vmin);
   grid-gap: 0vmin;
   justify-content: center;
+  /* border-left: 3px solid rgb(19, 6, 6);
+  border-Top: 3px solid rgb(19, 6, 6);
+  border-right: 3px solid rgb(19, 6, 6);
+  border-bottom: 3px solid rgb(19, 6, 6); */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(9, 7vmin);
 }
 
 .box {
   font-size: 2vmin;
   text-align: center;
   vertical-align: middle;
-  cursor: auto;
+  border: 1px solid rgb(19, 6, 6);
+}
+.box:first-child {
+  border-left: 3px solid rgb(19, 6, 6);
+}
+.box:nth-child(3n) {
+  border-right: 3px solid rgb(19, 6, 6);
+}
+tr:first-child .box {
+  border-top: 3px solid rgb(19, 6, 6);
+}
+tr:nth-child(3n) .box {
+  border-bottom: 3px solid rgb(19, 6, 6);
 }
