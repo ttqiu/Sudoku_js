@@ -7,10 +7,10 @@ class Row {
     this.name = name
   }
   createRow() {
-    const r = document.createElement('tr')
-    r.classList.add('row')
-    r.setAttribute('id', `row${this.name}`)
-    board.append(r)
+    const newRow = document.createElement('tr')
+    newRow.classList.add('row')
+    newRow.setAttribute('id', `row${this.name}`)
+    board.append(newRow)
   }
 }
 
@@ -20,30 +20,29 @@ class Box {
     this.row = row
   }
   createBox() {
-    const b = document.createElement('input')
-    b.classList.add('box')
-    b.setAttribute('id', this.name)
-    b.setAttribute('type', 'text')
-    b.setAttribute('onkeypress', 'return /[1-9]/i.test(event.key)')
-    b.setAttribute('maxlength', '1')
-    this.row.append(b)
+    const newBox = document.createElement('input')
+    newBox.classList.add('box')
+    newBox.setAttribute('id', this.name)
+    newBox.setAttribute('type', 'text')
+    newBox.setAttribute('onkeypress', 'return /[1-9]/i.test(event.key)')
+    newBox.setAttribute('maxlength', '1')
+    this.row.append(newBox)
   }
 }
 
-const grid = () => {
+const createGrid = () => {
   for (n = 0; n < 9; n++) {
-    const row = new Row(`${n}`)
-    row.createRow()
-    const eachRow = document.getElementById(`row${n}`)
+    const eachRow = new Row(`${n}`)
+    eachRow.createRow()
+    const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
-      const box = new Box(`${i}`, eachRow)
-      box.createBox()
-      const bb = document.getElementById(i)
+      const eachBox = new Box(`${i}`, row)
+      eachBox.createBox()
     }
   }
 }
 
-const easy = [
+const easyLevel = [
   [0, 0, 0, 2, 6, 0, 7, 0, 1],
   [0, 6, 8, 0, 0, 7, 0, 0, 9],
   [1, 9, 0, 0, 0, 4, 5, 0, 0],
@@ -57,8 +56,8 @@ const easy = [
 
 const start = () => {
   // let boardArry = new Array(81).fill('')
-  boardArray = easy
-  grid()
+  boardArray = easyLevel
+  createGrid()
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
@@ -73,13 +72,13 @@ const start = () => {
 }
 start()
 
-function Duplicates(array) {
+const Duplicates = (array) => {
   return array.filter(
     (currentValue, currentIndex) => array.indexOf(currentValue) !== currentIndex
   )
 }
 
-const arrayColumn = (array, n) => array.map((x) => x[n])
+const arrayColumn = (array, column) => array.map((row) => row[column])
 
 const play = () => {
   for (let n = 0; n < 9; n++) {
@@ -88,12 +87,13 @@ const play = () => {
       const box = row.children[`${i}`]
       box.addEventListener('keypress', function () {
         boardArray[n][i] = parseInt(box.value)
-        let rowD = Duplicates(boardArray[n])
-        const col = arrayColumn(boardArray, i)
-        let colD = Duplicates(col)
+        let rowDuplicate = Duplicates(boardArray[n])
+        const column = arrayColumn(boardArray, i)
+        let columnDuplicate = Duplicates(column)
         if (
           isNaN(boardArray[n][i]) === false &&
-          (rowD.includes(boardArray[n][i]) || colD.includes(boardArray[n][i]))
+          (rowDuplicate.includes(boardArray[n][i]) ||
+            columnDuplicate.includes(boardArray[n][i]))
         ) {
           box.style.backgroundColor = 'red'
         } else {
