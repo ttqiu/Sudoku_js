@@ -82,40 +82,20 @@ const Duplicates = (array) => {
 
 const arrayColumn = (array, column) => array.map((row) => row[column])
 
-const rowPositon = (n) => {
-  if (n <= 2) {
-    rowStart = 0
-    rowEnd = 2
-  } else if (n < 6 && n > 2) {
-    rowStart = 3
-    rowEnd = 5
-  } else {
-    rowStart = 6
-    rowEnd = 8
-  }
-  return [rowStart, rowEnd]
-}
-
-const columnPosition = (i) => {
-  if (i <= 2) {
-    columnStart = 0
-    columnEnd = 2
-  } else if (i < 6 && i > 2) {
-    columnStart = 3
-    columnEnd = 5
-  } else {
-    columnStart = 6
-    columnEnd = 8
-  }
-  return [columnStart, columnEnd]
+const arrayPositon = (n, i) => {
+  rowStart = 3 * Math.floor(n / 3)
+  columnStart = 3 * Math.floor(i / 3)
+  rowEnd = 2 + 3 * Math.floor(n / 3)
+  columnEnd = 2 + 3 * Math.floor(i / 3)
+  return [rowStart, rowEnd, columnStart, columnEnd]
 }
 
 const subgrid = (array, n, i) => {
   let subgridArray = []
-  rowStart = rowPositon(n)[0]
-  rowEnd = rowPositon(n)[1]
-  columnStart = columnPosition(i)[0]
-  columnEnd = columnPosition(i)[1]
+  rowStart = arrayPositon(n, i)[0]
+  rowEnd = arrayPositon(n, i)[1]
+  columnStart = arrayPositon(n, i)[2]
+  columnEnd = arrayPositon(n, i)[3]
 
   for (r = rowStart; r <= rowEnd; r++) {
     for (col = columnStart; col <= columnEnd; col++) {
@@ -133,8 +113,6 @@ const play = () => {
       box.addEventListener('keypress', function (e) {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
-        // console.log(boardArray[n][i])
-        // console.log(boardArray)
         let rowDuplicate = Duplicates(boardArray[n])
         const column = arrayColumn(boardArray, i)
         let columnDuplicate = Duplicates(column)
