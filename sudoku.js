@@ -1,6 +1,7 @@
 const restart = document.getElementById('replay')
 const check = document.getElementById('check')
-const board = document.querySelector('section')
+const board = document.querySelector('.board')
+const solvedMessage = document.querySelector('.solve')
 let boardArray = []
 
 class Row {
@@ -132,6 +133,8 @@ const play = () => {
       box.addEventListener('keypress', function (e) {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
+        // console.log(boardArray[n][i])
+        // console.log(boardArray)
         let rowDuplicate = Duplicates(boardArray[n])
         const column = arrayColumn(boardArray, i)
         let columnDuplicate = Duplicates(column)
@@ -155,8 +158,8 @@ play()
 
 const checker = (array) => array.every((value) => value === true)
 
-const solveArray = []
 const solved = check.addEventListener('click', function () {
+  const solveArray = []
   for (let n = 0; n < 9; n++) {
     for (let i = 0; i < 9; i++) {
       let rowDuplicate = Duplicates(boardArray[n])
@@ -174,9 +177,10 @@ const solved = check.addEventListener('click', function () {
       }
     }
   }
+  console.log(solveArray)
   if (solveArray.length === 81 && checker(solveArray) === true) {
-    console.log('solved')
+    solvedMessage.style.opacity = 1
   } else {
-    console.log('sorry')
+    alert("There's some errors in the puzzle")
   }
 })
