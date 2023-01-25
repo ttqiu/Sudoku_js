@@ -73,11 +73,13 @@ const start = () => {
 }
 start()
 
-function findDuplicates(arr) {
-  return arr.filter(
-    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex
+function Duplicates(array) {
+  return array.filter(
+    (currentValue, currentIndex) => array.indexOf(currentValue) !== currentIndex
   )
 }
+
+const arrayColumn = (array, n) => arr.map((x) => x[n])
 
 const play = () => {
   for (let n = 0; n < 9; n++) {
