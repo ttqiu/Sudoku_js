@@ -1,4 +1,5 @@
 const restart = document.getElementById('replay')
+const check = document.getElementById('check')
 const board = document.querySelector('section')
 let boardArray = []
 
@@ -43,15 +44,15 @@ const createGrid = () => {
 }
 
 const easyLevel = [
-  [0, 0, 0, 2, 6, 0, 7, 0, 1],
-  [0, 6, 8, 0, 0, 7, 0, 0, 9],
-  [1, 9, 0, 0, 0, 4, 5, 0, 0],
-  [8, 2, 0, 1, 0, 0, 0, 4, 0],
-  [0, 0, 4, 6, 0, 2, 9, 0, 0],
-  [0, 5, 0, 0, 0, 3, 0, 2, 8],
-  [0, 0, 9, 3, 0, 0, 0, 7, 4],
-  [0, 4, 0, 0, 5, 0, 0, 3, 6],
-  [7, 0, 3, 0, 1, 8, 0, 0, 0]
+  [0, 0, 0, 8, 2, 0, 4, 0, 7],
+  [0, 0, 0, 0, 0, 7, 0, 0, 6],
+  [0, 0, 6, 0, 3, 0, 0, 0, 0],
+  [0, 7, 0, 0, 9, 5, 0, 0, 0],
+  [4, 0, 2, 6, 0, 0, 1, 0, 0],
+  [3, 9, 0, 0, 0, 0, 0, 0, 0],
+  [0, 5, 0, 7, 0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0, 0, 8, 3, 0],
+  [0, 0, 0, 0, 0, 8, 6, 0, 2]
 ]
 
 const start = () => {
@@ -129,9 +130,8 @@ const play = () => {
     for (let i = 0; i < 9; i++) {
       const box = row.children[`${i}`]
       box.addEventListener('keypress', function (e) {
-        // box.value = e.key
+        box.value = e.key
         boardArray[n][i] = parseInt(box.value)
-        console.log(boardArray[n])
         let rowDuplicate = Duplicates(boardArray[n])
         const column = arrayColumn(boardArray, i)
         let columnDuplicate = Duplicates(column)
@@ -152,3 +152,31 @@ const play = () => {
   }
 }
 play()
+
+const checker = (array) => array.every((value) => value === true)
+
+const solveArray = []
+const solved = check.addEventListener('click', function () {
+  for (let n = 0; n < 9; n++) {
+    for (let i = 0; i < 9; i++) {
+      let rowDuplicate = Duplicates(boardArray[n])
+      const column = arrayColumn(boardArray, i)
+      let columnDuplicate = Duplicates(column)
+      const subgridArray = subgrid(boardArray, n, i)
+      let subgridDuplicate = Duplicates(subgridArray)
+      if (
+        isNaN(boardArray[n][i]) === false &&
+        (!rowDuplicate.includes(boardArray[n][i]) === true ||
+          !columnDuplicate.includes(boardArray[n][i]) === true ||
+          !subgridDuplicate.includes(boardArray[n][i]) === true)
+      ) {
+        solveArray.push(true)
+      }
+    }
+  }
+  if (solveArray.length === 81 && checker(solveArray) === true) {
+    console.log('solved')
+  } else {
+    console.log('sorry')
+  }
+})
