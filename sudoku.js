@@ -79,7 +79,7 @@ function Duplicates(array) {
   )
 }
 
-const arrayColumn = (array, n) => arr.map((x) => x[n])
+const arrayColumn = (array, n) => array.map((x) => x[n])
 
 const play = () => {
   for (let n = 0; n < 9; n++) {
@@ -88,7 +88,15 @@ const play = () => {
       const box = row.children[`${i}`]
       box.addEventListener('keypress', function () {
         boardArray[n][i] = parseInt(box.value)
-        console.log(boardArray)
+        let rowD = Duplicates(boardArray[n])
+        if (
+          isNaN(boardArray[n][i]) === false &&
+          rowD.includes(boardArray[n][i])
+        ) {
+          box.style.backgroundColor = 'red'
+        } else {
+          box.style.backgroundColor = 'white'
+        }
       })
     }
   }
