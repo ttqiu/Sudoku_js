@@ -73,6 +73,12 @@ const start = () => {
 }
 start()
 
+function findDuplicates(arr) {
+  return arr.filter(
+    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex
+  )
+}
+
 const play = () => {
   for (let n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
