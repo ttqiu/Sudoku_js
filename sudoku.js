@@ -89,9 +89,11 @@ const play = () => {
       box.addEventListener('keypress', function () {
         boardArray[n][i] = parseInt(box.value)
         let rowD = Duplicates(boardArray[n])
+        const col = arrayColumn(boardArray, i)
+        let colD = Duplicates(col)
         if (
           isNaN(boardArray[n][i]) === false &&
-          rowD.includes(boardArray[n][i])
+          (rowD.includes(boardArray[n][i]) || colD.includes(boardArray[n][i]))
         ) {
           box.style.backgroundColor = 'red'
         } else {
