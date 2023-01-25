@@ -80,20 +80,68 @@ const Duplicates = (array) => {
 
 const arrayColumn = (array, column) => array.map((row) => row[column])
 
+const rowPositon = (n) => {
+  if (n <= 2) {
+    rowStart = 0
+    rowEnd = 2
+  } else if (n < 6 && n > 2) {
+    rowStart = 3
+    rowEnd = 5
+  } else {
+    rowStart = 6
+    rowEnd = 8
+  }
+  return [rowStart, rowEnd]
+}
+
+const columnPosition = (i) => {
+  if (i <= 2) {
+    columnStart = 0
+    columnEnd = 2
+  } else if (i < 6 && i > 2) {
+    columnStart = 3
+    columnEnd = 5
+  } else {
+    columnStart = 6
+    columnEnd = 8
+  }
+  return [columnStart, columnEnd]
+}
+
+const subgrid = (array, n, i) => {
+  let subgridArray = []
+  rowStart = rowPositon(n)[0]
+  rowEnd = rowPositon(n)[1]
+  columnStart = columnPosition(i)[0]
+  columnEnd = columnPosition(i)[1]
+
+  for (r = rowStart; r <= rowEnd; r++) {
+    for (col = columnStart; col <= columnEnd; col++) {
+      subgridArray.push(array[r][col])
+    }
+  }
+  return subgridArray
+}
+
 const play = () => {
   for (let n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (let i = 0; i < 9; i++) {
       const box = row.children[`${i}`]
-      box.addEventListener('keypress', function () {
+      box.addEventListener('keypress', function (e) {
+        // box.value = e.key
         boardArray[n][i] = parseInt(box.value)
+        console.log(boardArray[n])
         let rowDuplicate = Duplicates(boardArray[n])
         const column = arrayColumn(boardArray, i)
         let columnDuplicate = Duplicates(column)
+        const subgridArray = subgrid(boardArray, n, i)
+        let subgridDuplicate = Duplicates(subgridArray)
         if (
           isNaN(boardArray[n][i]) === false &&
           (rowDuplicate.includes(boardArray[n][i]) ||
-            columnDuplicate.includes(boardArray[n][i]))
+            columnDuplicate.includes(boardArray[n][i]) ||
+            subgridDuplicate.includes(boardArray[n][i]))
         ) {
           box.style.backgroundColor = 'red'
         } else {
