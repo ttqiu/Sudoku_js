@@ -1,17 +1,29 @@
 body {
   margin: 0px;
-  height: 97vh;
+  /* height: 95vh; */
   align-items: center;
   text-align: center;
-  color: black;
+  color: palevioletred;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.game {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.homepage {
+  background-image: url(https://e1.pxfuel.com/desktop-wallpaper/10/124/desktop-wallpaper-anime-cat-aesthetic-anime-pc-cat.jpg);
+  background-attachment: fixed;
+  background-size: auto 100%;
+  background-position: center;
+}
+
+
+.gamepage {
+  background-image: url(https://e0.pxfuel.com/wallpapers/235/737/desktop-wallpaper-vision-and-background-iphonebackground-tumblrbackground-blackbackground-cute-cartoon-cute-dog-drawing-kawaii.jpg);
+  /* background-image: url(https://wallpapercave.com/dwp2x/wp7652757.jpg); */
+  background-attachment: fixed;
+  background-size: auto 100%;
+  background-position: center;
+  font-size: xx-large;
 }
 
 section.board {
@@ -19,6 +31,7 @@ section.board {
   grid-template-rows: repeat(9, 7vmin);
   grid-gap: 0vmin;
   justify-content: center;
+  margin: 0px 0px 50px 0px;
 }
 
 .row {
@@ -31,7 +44,10 @@ section.board {
   text-align: center;
   vertical-align: middle;
   border: 1px solid rgb(19, 6, 6);
+  color: black;
+  background-color: transparent;
 }
+
 .box:first-child {
   border-left: 3px solid rgb(19, 6, 6);
 }
@@ -58,4 +74,19 @@ tr:nth-child(3n) .box {
   opacity: 0;
   pointer-events: none;
   transition: all 250ms ease;
+}
+
+button {
+  background-color: rgba(79, 79, 79, 0);
+  color: palevioletred;
+  font-size: 3vmin;
+  font-weight: normal;
+  border: 2px solid palevioletred;
+  border-radius: 3vmin;
+}
+
+button:hover {
+  background-color: palevioletred;
+  color: white;
+  cursor: pointer;
 }

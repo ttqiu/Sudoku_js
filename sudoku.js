@@ -56,10 +56,10 @@ const easyLevel = [
   [0, 0, 0, 0, 0, 8, 6, 0, 2]
 ]
 
-const start = () => {
+const start = (level) => {
   // let boardArry = new Array(81).fill('')
-  boardArray = easyLevel
   createGrid()
+  boardArray = level
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
@@ -72,7 +72,7 @@ const start = () => {
     }
   }
 }
-start()
+start(easyLevel)
 
 const Duplicates = (array) => {
   return array.filter(
@@ -113,6 +113,7 @@ const play = () => {
       box.addEventListener('keypress', function (e) {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
+        // console.log(boardArray[n])
         let rowDuplicate = Duplicates(boardArray[n])
         const column = arrayColumn(boardArray, i)
         let columnDuplicate = Duplicates(column)
@@ -124,9 +125,9 @@ const play = () => {
             columnDuplicate.includes(boardArray[n][i]) ||
             subgridDuplicate.includes(boardArray[n][i]))
         ) {
-          box.style.backgroundColor = 'red'
+          box.style.color = 'red'
         } else {
-          box.style.backgroundColor = 'white'
+          box.style.color = 'black'
         }
       })
     }
@@ -155,10 +156,19 @@ const solved = check.addEventListener('click', function () {
       }
     }
   }
-  console.log(solveArray)
   if (solveArray.length === 81 && checker(solveArray) === true) {
     solvedMessage.style.opacity = 1
   } else {
     alert("There's some errors in the puzzle")
   }
 })
+// console.log(boardArray)
+
+const replay = restart.addEventListener('click', function () {
+  location.reload()
+  while (board.firstChild) {
+    board.removeChild(board.firstChild)
+  }
+  start(easyLevel)
+})
+// console.log(boardArray)
