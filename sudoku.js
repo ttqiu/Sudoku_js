@@ -2,9 +2,21 @@ const restart = document.getElementById('replay')
 const check = document.getElementById('check')
 const board = document.querySelector('.board')
 const solvedMessage = document.querySelector('.solve')
-// const solveButton = document.getElementById('solve-answer')
+const solveButton = document.getElementById('solve-answer')
 
 let boardArray = []
+
+const emptyGrid = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
 
 class Row {
   constructor(name) {
@@ -45,18 +57,6 @@ const createGrid = () => {
     }
   }
 }
-
-const emptyGrid = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
 
 const Duplicates = (array) => {
   return array.filter(
@@ -108,7 +108,7 @@ const valid = (boardArray, n, i) => {
 
 const randomlize = (board) => {
   for (let n = 0; n < 9; n++) {
-    const rndRange = Math.floor(Math.random() * 3) + 3
+    const rndRange = Math.floor(Math.random() * 2) + 4
     for (let i = 0; i <= rndRange; i++) {
       const rndBox = Math.floor(Math.random() * 8)
       const rndNumber = Math.floor(Math.random() * 9) + 1
@@ -121,17 +121,27 @@ const randomlize = (board) => {
   return board
 }
 
-function solveSudoku() {
+const solveSudoku = () => {
   let board = randomlize(emptyGrid)
   let board1 = JSON.parse(JSON.stringify(board))
-  while (dfs(board) != true) {
-    board = randomlize(emptyGrid)
-    board1 = JSON.parse(JSON.stringify(board))
+  let count = 4
+  if (count <= 4 && count > 0) {
+    while (dfs(board) != true) {
+      board = randomlize(emptyGrid)
+      board1 = JSON.parse(JSON.stringify(board))
+      count -= 1
+    }
+  } else {
+    solveSudoku()
   }
+  // while (dfs(board) != true) {
+  //   board = randomlize(emptyGrid)
+  //   board1 = JSON.parse(JSON.stringify(board))
+  // }
   return [board, board1]
 }
 
-function dfs(board) {
+const dfs = (board) => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
       if (board[i][j] === 0) {
@@ -152,36 +162,24 @@ function dfs(board) {
 const solveProve = solveSudoku()
 const answerBoard = solveProve[0]
 const startBoard = solveProve[1]
-console.log(answerBoard, startBoard)
 
-// const solveAnswer = solveButton.addEventListener('click', function () {
-//   boardArray = answerBoard
-// })
-
-// const hideValueBoard = (board) => {
-//   for (let n = 0; n < 9; n++) {
-//     const rndRange = Math.floor(Math.random() * 2) + 5
-//     for (let i = 0; i <= rndRange; i++) {
-//       const rndBox = Math.floor(Math.random() * 8)
-//       board[n][rndBox] = 0
-//     }
-//   }
-//   return board
-// }
-
-const start = (board) => {
-  createGrid()
-  boardArray = board
+const inputInitValues = (board) => {
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
       const box = row.children[`${i}`]
-      if (boardArray[n][i] !== 0) {
-        box.value = boardArray[n][i]
+      if (board[n][i] !== 0) {
+        box.value = board[n][i]
         box.disabled = true
       }
     }
   }
+}
+
+const start = (board) => {
+  createGrid()
+  boardArray = board
+  inputInitValues(boardArray)
 }
 start(startBoard)
 
@@ -229,10 +227,17 @@ const solved = check.addEventListener('click', function () {
   }
 })
 
+const solveAnswer = solveButton.addEventListener('click', function () {
+  inputInitValues(answerBoard)
+})
+
 const replay = restart.addEventListener('click', function () {
   location.reload()
   // while (board.firstChild) {
   //   board.removeChild(board.firstChild)
   // }
+  // const solveProve = solveSudoku()
+  // const answerBoard = solveProve[0]
+  // const startBoard = solveProve[1]
   // start(startBoard)
 })
