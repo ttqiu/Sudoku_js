@@ -16,18 +16,20 @@
 
 #### A Trello board to keep track of development progress [here](https://trello.com/b/jUXCA7lq/unit-1-project).
 
-#### Designing sudoku puzzles and how the game should appear on the browser.
+#### Designing the general outline of the sudoku browser game
 
 #### Create HTML pages
-
-#### CSS to style up the pages
 
 #### Think about the algorithm of sudoku.
 
 #### Coding with Javascript to add sudoku algorithm and action features.
+
+#### CSS to style up the pages
 
 ## **_Credits_**
 
 #### Images: [Google Seach](https://www.google.com/)
 
 #### CSS Guide: [w3schools](https://www.w3schools.com/css/)
+
+#### StackOverflow Help: [StackOverflow](https://stackoverflow.com/)
