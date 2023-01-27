@@ -2,6 +2,8 @@ const restart = document.getElementById('replay')
 const check = document.getElementById('check')
 const board = document.querySelector('.board')
 const solvedMessage = document.querySelector('.solve')
+// const solveButton = document.getElementById('solve-answer')
+
 let boardArray = []
 
 class Row {
@@ -106,7 +108,7 @@ const valid = (boardArray, n, i) => {
 
 const randomlize = (board) => {
   for (let n = 0; n < 9; n++) {
-    const rndRange = Math.floor(Math.random() * 2) + 3
+    const rndRange = Math.floor(Math.random() * 3) + 3
     for (let i = 0; i <= rndRange; i++) {
       const rndBox = Math.floor(Math.random() * 8)
       const rndNumber = Math.floor(Math.random() * 9) + 1
@@ -119,15 +121,14 @@ const randomlize = (board) => {
   return board
 }
 
-const randomBoard = randomlize(emptyGrid)
-
-function solveSudoku(board) {
-  dfs(board)
+function solveSudoku() {
+  let board = randomlize(emptyGrid)
+  let board1 = JSON.parse(JSON.stringify(board))
   while (dfs(board) != true) {
     board = randomlize(emptyGrid)
-    solveSudoku(board)
+    board1 = JSON.parse(JSON.stringify(board))
   }
-  return board
+  return [board, board1]
 }
 
 function dfs(board) {
@@ -148,22 +149,29 @@ function dfs(board) {
   return true
 }
 
-const answerBoard = solveSudoku(randomBoard)
+const solveProve = solveSudoku()
+const answerBoard = solveProve[0]
+const startBoard = solveProve[1]
+console.log(answerBoard, startBoard)
 
-const hideValueBoard = (board) => {
-  for (let n = 0; n < 9; n++) {
-    const rndRange = Math.floor(Math.random() * 2) + 5
-    for (let i = 0; i <= rndRange; i++) {
-      const rndBox = Math.floor(Math.random() * 8)
-      board[n][rndBox] = 0
-    }
-  }
-  return board
-}
+// const solveAnswer = solveButton.addEventListener('click', function () {
+//   boardArray = answerBoard
+// })
+
+// const hideValueBoard = (board) => {
+//   for (let n = 0; n < 9; n++) {
+//     const rndRange = Math.floor(Math.random() * 2) + 5
+//     for (let i = 0; i <= rndRange; i++) {
+//       const rndBox = Math.floor(Math.random() * 8)
+//       board[n][rndBox] = 0
+//     }
+//   }
+//   return board
+// }
 
 const start = (board) => {
   createGrid()
-  boardArray = hideValueBoard(board)
+  boardArray = board
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
@@ -175,7 +183,7 @@ const start = (board) => {
     }
   }
 }
-start(answerBoard)
+start(startBoard)
 
 const play = () => {
   for (let n = 0; n < 9; n++) {
@@ -185,7 +193,6 @@ const play = () => {
       box.addEventListener('keypress', function (e) {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
-        // console.log(boardArray[n])
         if (
           isNaN(boardArray[n][i]) === false &&
           valid(boardArray, n, i) === false
@@ -218,14 +225,14 @@ const solved = check.addEventListener('click', function () {
   if (solveArray.length === 81 && checker(solveArray) === true) {
     solvedMessage.style.opacity = 1
   } else {
-    alert("There's some errors in the puzzle")
+    alert('There are errors in the puzzle')
   }
 })
 
 const replay = restart.addEventListener('click', function () {
   location.reload()
-  while (board.firstChild) {
-    board.removeChild(board.firstChild)
-  }
-  start(answerBoard)
+  // while (board.firstChild) {
+  //   board.removeChild(board.firstChild)
+  // }
+  // start(startBoard)
 })
