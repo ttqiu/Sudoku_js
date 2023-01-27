@@ -50,12 +50,12 @@ a:hover {
 
 .modal-content {
   position: absolute;
-  top: 73%; 
+  top: 67%; 
   left: 50%; 
   transform: translate(-50%, -50%);
   background-color: beige;
-  padding: 1rem 1.5rem;
-  width: 40rem;
+  /* padding: 1rem 1rem; */
+  width: 33rem;
   border-radius: 0.5rem;
 }
 
@@ -100,7 +100,7 @@ section.board {
   grid-template-rows: repeat(9, 7vmin);
   grid-gap: 0vmin;
   justify-content: center;
-  margin: 0px 0px 50px 0px;
+  margin: 0px 0px 30px 0px;
 }
 
 .row {
@@ -159,4 +159,9 @@ button:hover {
   background-color: palevioletred;
   color: white;
   cursor: pointer;
+}
+
+#home {
+  font-size: 25px;
+  margin: 15px 0px 10px 0px;
 }

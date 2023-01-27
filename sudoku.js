@@ -1,7 +1,7 @@
 const restart = document.getElementById('replay')
 const check = document.getElementById('check')
-const board = document.querySelector('.board')
-const solvedMessage = document.querySelector('.solve')
+const gameBoard = document.querySelector('.board')
+const congraMessage = document.querySelector('.solve')
 const solveButton = document.getElementById('solve-answer')
 
 let boardArray = []
@@ -26,7 +26,7 @@ class Row {
     const newRow = document.createElement('tr')
     newRow.classList.add('row')
     newRow.setAttribute('id', `row${this.name}`)
-    board.append(newRow)
+    gameBoard.append(newRow)
   }
 }
 
@@ -89,16 +89,16 @@ const subgrid = (array, n, i) => {
   return subgridArray
 }
 
-const valid = (boardArray, n, i) => {
-  let rowDuplicate = Duplicates(boardArray[n])
-  const column = arrayColumn(boardArray, i)
+const valid = (board, n, i) => {
+  let rowDuplicate = Duplicates(board[n])
+  const column = arrayColumn(board, i)
   let columnDuplicate = Duplicates(column)
-  const subgridArray = subgrid(boardArray, n, i)
+  const subgridArray = subgrid(board, n, i)
   let subgridDuplicate = Duplicates(subgridArray)
   if (
-    rowDuplicate.includes(boardArray[n][i]) ||
-    columnDuplicate.includes(boardArray[n][i]) ||
-    subgridDuplicate.includes(boardArray[n][i])
+    rowDuplicate.includes(board[n][i]) ||
+    columnDuplicate.includes(board[n][i]) ||
+    subgridDuplicate.includes(board[n][i])
   ) {
     return false
   } else {
@@ -113,7 +113,8 @@ const randomlize = (board) => {
       const rndBox = Math.floor(Math.random() * 8)
       const rndNumber = Math.floor(Math.random() * 9) + 1
       board[n][rndBox] = rndNumber
-      if (valid(board, n, rndBox) === false) {
+      let isValid = valid(board, n, rndBox)
+      if (isValid === false) {
         board[n][rndBox] = 0
       }
     }
@@ -124,34 +125,35 @@ const randomlize = (board) => {
 const solveSudoku = () => {
   let board = randomlize(emptyGrid)
   let board1 = JSON.parse(JSON.stringify(board))
-  let count = 4
-  if (count <= 4 && count > 0) {
-    while (dfs(board) != true) {
-      board = randomlize(emptyGrid)
-      board1 = JSON.parse(JSON.stringify(board))
-      count -= 1
-    }
-  } else {
-    solveSudoku()
-  }
-  // while (dfs(board) != true) {
-  //   board = randomlize(emptyGrid)
-  //   board1 = JSON.parse(JSON.stringify(board))
+  // let count = 3
+  // if (count <= 3 && count > 0) {
+  //   while (dfs(board) != true) {
+  //     board = randomlize(emptyGrid)
+  //     board1 = JSON.parse(JSON.stringify(board))
+  //     count -= 1
+  //   }
+  // } else {
+  //   solveSudoku()
   // }
+  while (dfs(board) != true) {
+    board = randomlize(emptyGrid)
+    board1 = JSON.parse(JSON.stringify(board))
+  }
   return [board, board1]
 }
 
 const dfs = (board) => {
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (board[i][j] === 0) {
+  for (let n = 0; n < 9; n++) {
+    for (let i = 0; i < 9; i++) {
+      if (board[n][i] === 0) {
         for (let l = 1; l < 10; l++) {
-          board[i][j] = l
-          if (valid(board, i, j) === true) {
+          board[n][i] = l
+          let isValid = valid(board, n, i)
+          if (isValid === true) {
             if (dfs(board)) return true
           }
         }
-        board[i][j] = 0
+        board[n][i] = 0
         return false
       }
     }
@@ -191,10 +193,8 @@ const play = () => {
       box.addEventListener('keypress', function (e) {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
-        if (
-          isNaN(boardArray[n][i]) === false &&
-          valid(boardArray, n, i) === false
-        ) {
+        let isValid = valid(boardArray, n, i)
+        if (isNaN(boardArray[n][i]) === false && isValid === false) {
           box.style.color = 'red'
         } else {
           box.style.color = 'black'
@@ -207,27 +207,24 @@ play()
 
 const checker = (array) => array.every((value) => value === true)
 
-const solved = check.addEventListener('click', function () {
-  const solveArray = []
+const checkInput = check.addEventListener('click', function () {
+  const checkArray = []
   for (let n = 0; n < 9; n++) {
     for (let i = 0; i < 9; i++) {
-      valid(boardArray, n, i)
-      if (
-        isNaN(boardArray[n][i]) === false &&
-        valid(boardArray, n, i) === true
-      ) {
-        solveArray.push(true)
+      let isValid = valid(boardArray, n, i)
+      if (isNaN(boardArray[n][i]) === false && isValid === true) {
+        checkArray.push(true)
       }
     }
   }
-  if (solveArray.length === 81 && checker(solveArray) === true) {
-    solvedMessage.style.opacity = 1
+  if (checkArray.length === 81 && checker(checkArray) === true) {
+    congraMessage.style.opacity = 1
   } else {
     alert('There are errors in the puzzle')
   }
 })
 
-const solveAnswer = solveButton.addEventListener('click', function () {
+const showAnswer = solveButton.addEventListener('click', function () {
   inputInitValues(answerBoard)
 })
 
