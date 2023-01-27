@@ -10,36 +10,40 @@
 </head>
 <body class="homepage">
   <main>
-      <h1 class="title">Sudoku</h1>
-      <div>
-        <a class="button" href="sudoku.html">Play</a>
+    <h1 class="title">Sudoku</h1>
+    <div>
+      <a class="button" href="sudoku.html">Play</a>
+    </div>
+    <button class="instruction">Sudoku Instruction</button>
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close-button">x</span>
+        <ul>
+          <li>
+            <b>Input numbers 1-9 and press Enter.</b> If the number is repeating, the number will turn red when inputting.
+          </li>
+          <li>
+            Numbers 1-9 must be filled out in each row, column, and 3x3 square without repeating any numbers.
+          </li>
+          <li>
+            If you're unsure of what number to put in a particular space, move on, continue scanning the other grid areas and come back later.
+          </li>
+          <li>
+            Try eliminating invalid numbers by checking which other numbers are already included within each square, row, or column.
+          </li>
+          <li>
+            To confirm if the puzzle has been solved, click the <b>Check</b> button.
+          </li>
+          <li>
+            Having trouble figuring out the Sudoku puzzle? To view the solution, click the <b>Solve</b> button.
+          </li>
+        </ul>
       </div>
-      <button class="instruction">Sudoku Instruction</button>
-      <div class="modal">
-          <div class="modal-content">
-              <span class="close-button">x</span>
-              <ul>
-                <li>
-                  <b>Input numbers 1-9 and press Enter.</b> If the number is repeating, the number will turn red when inputting.
-                </li>
-                <li>
-                  Numbers 1-9 must be filled out in each row, column, and 3x3 square without repeating any numbers.
-                </li>
-                <li>
-                  If you're unsure of what number to put in a particular space, move on, continue scanning the other grid areas and come back later.
-                </li>
-                <li>
-                  Try eliminating invalid numbers by checking which other numbers are already included within each square, row, or column.
-                </li>
-                <li>
-                  To confirm if the puzzle has been solved, click the <b>Check</b> button.
-                </li>
-                <li>
-                  Having trouble figuring out the Sudoku puzzle? To view the solution, click the <b>Solve</b> button.
-                </li>
-              </ul>
-          </div>
-      </div>
+    </div>
+    <div class="musicOn">
+      <audio id="audio" style="display:none;" src="mixkit-classical-vibes-3-683.mp3" controls autoplay loop>
+    </div>
+    <button class="music">Music</button>
   </main>
 </body>
 </html>

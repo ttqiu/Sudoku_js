@@ -3,6 +3,8 @@ const check = document.getElementById('check')
 const gameBoard = document.querySelector('.board')
 const congraMessage = document.querySelector('.solve')
 const solveButton = document.getElementById('solve-answer')
+let on_off = document.querySelector('.game-music')
+let audio = document.querySelector('.musicOn audio')
 
 let boardArray = []
 
@@ -238,3 +240,12 @@ const replay = restart.addEventListener('click', function () {
   // const startBoard = solveProve[1]
   // start(startBoard)
 })
+
+const music = on_off.addEventListener('click', function () {
+  audio.paused ? audio.play() : music_stop()
+})
+
+const music_stop = () => {
+  audio.pause()
+  audio.currentTime = 0
+}

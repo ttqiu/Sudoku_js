@@ -15,3 +15,15 @@ const instructionOnClick = (event) => {
 instruction.addEventListener('click', instructionModal)
 closeButton.addEventListener('click', instructionModal)
 window.addEventListener('click', instructionOnClick)
+
+let on_off = document.querySelector('.music')
+let audio = document.querySelector('.musicOn audio')
+
+const music = on_off.addEventListener('click', function () {
+  audio.paused ? audio.play() : music_stop()
+})
+
+const music_stop = () => {
+  audio.pause()
+  audio.currentTime = 0
+}
