@@ -1,29 +1,98 @@
 body {
-  margin: 0px;
-  /* height: 95vh; */
+  /* margin: 0px; */
   align-items: center;
   text-align: center;
-  color: palevioletred;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
 .homepage {
-  background-image: url(https://e1.pxfuel.com/desktop-wallpaper/10/124/desktop-wallpaper-anime-cat-aesthetic-anime-pc-cat.jpg);
-  background-attachment: fixed;
-  background-size: auto 100%;
-  background-position: center;
-}
-
-
-.gamepage {
-  background-image: url(https://e0.pxfuel.com/wallpapers/235/737/desktop-wallpaper-vision-and-background-iphonebackground-tumblrbackground-blackbackground-cute-cartoon-cute-dog-drawing-kawaii.jpg);
-  /* background-image: url(https://wallpapercave.com/dwp2x/wp7652757.jpg); */
+  background-image: url(https://wallpaper.dog/large/17212916.jpg);
   background-attachment: fixed;
   background-size: auto 100%;
   background-position: center;
   font-size: xx-large;
+  color: rgb(176, 147, 127);
+}
+
+.title {
+  margin: 100px 0px 50px 0px;
+}
+
+a {
+  color: rgb(123, 179, 223);
+  border-radius: 1vmin;
+}
+
+a:hover {
+  background-color: rgb(123, 179, 223);
+  color: white;
+  cursor: pointer;
+}
+
+.instruction {
+  margin: 85px 0px 50px 0px;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  /* overflow: auto;  */
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content {
+  position: absolute;
+  top: 73%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  background-color: beige;
+  padding: 1rem 1.5rem;
+  width: 50rem;
+  border-radius: 0.5rem;
+}
+
+.close-button {
+  float: right;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: rgb(228, 226, 226);
+}
+
+.close-button:hover {
+  background-color: rgb(195, 192, 192);
+}
+
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+li{
+  word-wrap: break-word;
+  font-size: x-large;
+  text-align: left;
+}
+
+.gamepage {
+  background-image: url(https://e0.pxfuel.com/wallpapers/235/737/desktop-wallpaper-vision-and-background-iphonebackground-tumblrbackground-blackbackground-cute-cartoon-cute-dog-drawing-kawaii.jpg);
+  background-attachment: fixed;
+  background-size: auto 100%;
+  background-position: center;
+  font-size: xx-large;
+  color: palevioletred;
 }
 
 section.board {
@@ -45,7 +114,7 @@ section.board {
   vertical-align: middle;
   border: 1px solid rgb(19, 6, 6);
   color: black;
-  background-color: transparent;
+  background-color: white;
 }
 
 .box:first-child {

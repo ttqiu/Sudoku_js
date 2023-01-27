@@ -5,14 +5,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script defer src="index.js"></script>
   <Title>Sodoku</Title>
 </head>
 <body class="homepage">
   <main>
-    <div class="container">
       <h1 class="title">Sudoku</h1>
-      <a class="button" href="sudoku.html">Play</a>
-    </div>
+      <div>
+        <a class="button" href="sudoku.html">Play</a>
+      </div>
+      <button class="instruction">Sudoku Instruction</button>
+      <div class="modal">
+          <div class="modal-content">
+              <span class="close-button">x</span>
+              <h3>Sudoku Instruction</h3>
+              <ul>
+                <li>
+                  Input numbers 1-9 and press Enter.
+                </li>
+                <li>
+                  Numbers 1-9 must be filled out in each row, column, and 3x3 square without repeating any numbers.
+                </li>
+                <li>
+                  If you're unsure of what number to put in a particular space, move on, continue scanning the other grid areas and come back later.
+                </li>
+                <li>
+                  Try eliminating invalid numbers by checking which other numbers are already included within each square, row, or column.<
+                </li>
+                <li>
+                  To confirm if the puzzle has been solved, click the Check button.
+                </li>
+              </ul>
+          </div>
+      </div>
   </main>
 </body>
 </html>
