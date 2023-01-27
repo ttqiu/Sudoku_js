@@ -26,6 +26,8 @@
 
 #### CSS to style up the pages
 
+#### Deploy on Surge
+
 ## **_Credits_**
 
 #### Images: [Google Seach](https://www.google.com/)
