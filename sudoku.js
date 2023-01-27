@@ -44,35 +44,13 @@ const createGrid = () => {
   }
 }
 
-const easyLevel = [
-  [0, 0, 0, 8, 2, 0, 4, 0, 7],
-  [0, 0, 0, 0, 0, 7, 0, 0, 6],
-  [0, 0, 6, 0, 3, 0, 0, 0, 0],
-  [0, 7, 0, 0, 9, 5, 0, 0, 0],
-  [4, 0, 2, 6, 0, 0, 1, 0, 0],
-  [3, 9, 0, 0, 0, 0, 0, 0, 0],
-  [0, 5, 0, 7, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 8, 3, 0],
-  [0, 0, 0, 0, 0, 8, 6, 0, 2]
-]
-
-const start = (level) => {
-  // let boardArry = new Array(81).fill('')
-  createGrid()
-  boardArray = level
-  for (n = 0; n < 9; n++) {
-    const row = document.getElementById(`row${n}`)
-    for (i = 0; i < 9; i++) {
-      const box = row.children[`${i}`]
-      if (boardArray[n][i] !== 0) {
-        box.value = boardArray[n][i]
-        // box.innerText = parseInt(box.value)
-        box.disabled = true
-      }
-    }
+const emptyGrid = () => {
+  let board = []
+  for (i = 0; i < 9; i++) {
+    board.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
+  return board
 }
-start(easyLevel)
 
 const Duplicates = (array) => {
   return array.filter(
@@ -105,6 +83,96 @@ const subgrid = (array, n, i) => {
   return subgridArray
 }
 
+const valid = (boardArray, n, i) => {
+  let rowDuplicate = Duplicates(boardArray[n])
+  const column = arrayColumn(boardArray, i)
+  let columnDuplicate = Duplicates(column)
+  const subgridArray = subgrid(boardArray, n, i)
+  let subgridDuplicate = Duplicates(subgridArray)
+  if (
+    rowDuplicate.includes(boardArray[n][i]) ||
+    columnDuplicate.includes(boardArray[n][i]) ||
+    subgridDuplicate.includes(boardArray[n][i])
+  ) {
+    return false
+  } else {
+    return true
+  }
+}
+
+const randomlize = (board) => {
+  for (let n = 0; n < 9; n++) {
+    const rndRange = Math.floor(Math.random() * 2) + 3
+    for (let i = 0; i <= rndRange; i++) {
+      const rndBox = Math.floor(Math.random() * 8)
+      const rndNumber = Math.floor(Math.random() * 9) + 1
+      board[n][rndBox] = rndNumber
+      if (valid(board, n, rndBox) === false) {
+        board[n][rndBox] = 0
+      }
+    }
+  }
+  return board
+}
+
+const randomBoard = randomlize(emptyGrid())
+
+function solveSudoku(board) {
+  dfs(board)
+  while (dfs(board) != true) {
+    board = randomlize(emptyGrid())
+    solveSudoku(board)
+  }
+  return board
+}
+
+function dfs(board) {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] === 0) {
+        for (let l = 1; l < 10; l++) {
+          board[i][j] = l
+          if (valid(board, i, j) === true) {
+            if (dfs(board)) return true
+          }
+        }
+        board[i][j] = 0
+        return false
+      }
+    }
+  }
+  return true
+}
+
+const answerBoard = solveSudoku(randomBoard)
+
+const hideValueBoard = (board) => {
+  for (let n = 0; n < 9; n++) {
+    const rndRange = Math.floor(Math.random() * 2) + 5
+    for (let i = 0; i <= rndRange; i++) {
+      const rndBox = Math.floor(Math.random() * 8)
+      board[n][rndBox] = 0
+    }
+  }
+  return board
+}
+
+const start = (board) => {
+  createGrid()
+  boardArray = hideValueBoard(board)
+  for (n = 0; n < 9; n++) {
+    const row = document.getElementById(`row${n}`)
+    for (i = 0; i < 9; i++) {
+      const box = row.children[`${i}`]
+      if (boardArray[n][i] !== 0) {
+        box.value = boardArray[n][i]
+        box.disabled = true
+      }
+    }
+  }
+}
+start(answerBoard)
+
 const play = () => {
   for (let n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
@@ -114,16 +182,9 @@ const play = () => {
         box.value = e.key
         boardArray[n][i] = parseInt(box.value)
         // console.log(boardArray[n])
-        let rowDuplicate = Duplicates(boardArray[n])
-        const column = arrayColumn(boardArray, i)
-        let columnDuplicate = Duplicates(column)
-        const subgridArray = subgrid(boardArray, n, i)
-        let subgridDuplicate = Duplicates(subgridArray)
         if (
           isNaN(boardArray[n][i]) === false &&
-          (rowDuplicate.includes(boardArray[n][i]) ||
-            columnDuplicate.includes(boardArray[n][i]) ||
-            subgridDuplicate.includes(boardArray[n][i]))
+          valid(boardArray, n, i) === false
         ) {
           box.style.color = 'red'
         } else {
@@ -141,16 +202,10 @@ const solved = check.addEventListener('click', function () {
   const solveArray = []
   for (let n = 0; n < 9; n++) {
     for (let i = 0; i < 9; i++) {
-      let rowDuplicate = Duplicates(boardArray[n])
-      const column = arrayColumn(boardArray, i)
-      let columnDuplicate = Duplicates(column)
-      const subgridArray = subgrid(boardArray, n, i)
-      let subgridDuplicate = Duplicates(subgridArray)
+      valid(boardArray, n, i)
       if (
         isNaN(boardArray[n][i]) === false &&
-        (!rowDuplicate.includes(boardArray[n][i]) === true ||
-          !columnDuplicate.includes(boardArray[n][i]) === true ||
-          !subgridDuplicate.includes(boardArray[n][i]) === true)
+        valid(boardArray, n, i) === true
       ) {
         solveArray.push(true)
       }
@@ -162,13 +217,11 @@ const solved = check.addEventListener('click', function () {
     alert("There's some errors in the puzzle")
   }
 })
-// console.log(boardArray)
 
 const replay = restart.addEventListener('click', function () {
   location.reload()
   while (board.firstChild) {
     board.removeChild(board.firstChild)
   }
-  start(easyLevel)
+  start(answerBoard)
 })
-// console.log(boardArray)
