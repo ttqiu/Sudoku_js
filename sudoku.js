@@ -150,9 +150,20 @@ function dfs(board) {
 
 const answerBoard = solveSudoku(randomBoard)
 
+const hideValueBoard = (board) => {
+  for (let n = 0; n < 9; n++) {
+    const rndRange = Math.floor(Math.random() * 2) + 5
+    for (let i = 0; i <= rndRange; i++) {
+      const rndBox = Math.floor(Math.random() * 8)
+      board[n][rndBox] = 0
+    }
+  }
+  return board
+}
+
 const start = (board) => {
   createGrid()
-  boardArray = board
+  boardArray = hideValueBoard(board)
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
