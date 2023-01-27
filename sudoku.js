@@ -44,13 +44,17 @@ const createGrid = () => {
   }
 }
 
-const emptyGrid = () => {
-  let board = []
-  for (i = 0; i < 9; i++) {
-    board.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
-  }
-  return board
-}
+const emptyGrid = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
 
 const Duplicates = (array) => {
   return array.filter(
@@ -115,12 +119,12 @@ const randomlize = (board) => {
   return board
 }
 
-const randomBoard = randomlize(emptyGrid())
+const randomBoard = randomlize(emptyGrid)
 
 function solveSudoku(board) {
   dfs(board)
   while (dfs(board) != true) {
-    board = randomlize(emptyGrid())
+    board = randomlize(emptyGrid)
     solveSudoku(board)
   }
   return board
@@ -146,20 +150,9 @@ function dfs(board) {
 
 const answerBoard = solveSudoku(randomBoard)
 
-const hideValueBoard = (board) => {
-  for (let n = 0; n < 9; n++) {
-    const rndRange = Math.floor(Math.random() * 2) + 5
-    for (let i = 0; i <= rndRange; i++) {
-      const rndBox = Math.floor(Math.random() * 8)
-      board[n][rndBox] = 0
-    }
-  }
-  return board
-}
-
 const start = (board) => {
   createGrid()
-  boardArray = hideValueBoard(board)
+  boardArray = board
   for (n = 0; n < 9; n++) {
     const row = document.getElementById(`row${n}`)
     for (i = 0; i < 9; i++) {
