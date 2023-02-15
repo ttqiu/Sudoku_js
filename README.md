@@ -26,7 +26,7 @@
 
 #### CSS to style up the pages
 
-#### Deploy on Surge
+#### Deploy on Surge [here](https://fun-sudoku-puzzle.surge.sh/index.html)
 
 ## **_Credits_**
 
